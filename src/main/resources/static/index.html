@@ -12,8 +12,8 @@
 <select id="operacao">
     <option value="somar"> Somar</option>
     <option value="subtrair"> Subtrair</option>
-    <option value="Multiplicar"> Multiplicar</option>
-    <option value="Dividir"> Dividir</option>
+    <option value="multiplicar"> Multiplicar</option>
+    <option value="dividir"> Dividir</option>
 
 
 
@@ -22,10 +22,19 @@
 <label> Resultado: <input type="text" id="resultado" readonly></label>
 
 <script>
-    function calcular(){
+    async function calcular(){
         const a = document.getElementById("numero1").value;
         const b = document.getElementById("numero2").value;
         const op = document.getElementById("operacao").value;
+        const url = `/calculadora/${op}?a=${a}&b=${b}`
+        const resposta = await fetch(url);
+        const campo = document.getElementById("resultado");
+        if(resposta.ok){
+            campo.value = await resposta.text();
+        }
+        else{
+            campo.value = "Erro ao executar a operação"
+        }
     }
 </script>
 </body>
